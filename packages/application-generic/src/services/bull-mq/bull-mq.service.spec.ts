@@ -163,4 +163,33 @@ describe('BullMQ Service', () => {
       });
     });
   });
+
+  describe('Prefix functionality', () => {
+    it('should use prefix if in Cluster mode in Redis', async () => {
+      process.env.IS_IN_MEMORY_CLUSTER_MODE_ENABLED = 'true';
+      process.env.MEMORY_DB_CLUSTER_SERVICE_HOST = '';
+
+      bullMqService = new BullMqService();
+      const queue = bullMqService.createQueue(JobTopicNameEnum.METRICS, {});
+      expect(queue.opts.prefix).toEqual('{metric}');
+    });
+
+    it('should use prefix if any non Redis provider used', async () => {
+      process.env.MEMORY_DB_CLUSTER_SERVICE_HOST = 'localhost';
+      process.env.IS_IN_MEMORY_CLUSTER_MODE_ENABLED = 'false';
+
+      bullMqService = new BullMqService();
+      const queue = bullMqService.createQueue(JobTopicNameEnum.METRICS, {});
+      expect(queue.opts.prefix).toEqual('{metric}');
+    });
+
+    it('should not use prefix if a Redis provider is used and not in Cluster mode', async () => {
+      process.env.MEMORY_DB_CLUSTER_SERVICE_HOST = '';
+      process.env.IS_IN_MEMORY_CLUSTER_MODE_ENABLED = 'false';
+
+      bullMqService = new BullMqService();
+      const queue = bullMqService.createQueue(JobTopicNameEnum.METRICS, {});
+      expect(queue.opts.prefix).toEqual('bull');
+    });
+  });
 });

@@ -39,6 +39,7 @@ import {
   DigestFilterStepsTimed,
   distributedLockService,
   EventsDistributedLockService,
+  FeatureFlagsService,
   GetIsInMemoryClusterModeEnabled,
   getIsMultiProviderConfigurationEnabled,
   InvalidateCacheService,
@@ -51,7 +52,6 @@ import {
   GetTenant,
   CreateTenant,
   ProcessTenant,
-  featureFlagsService,
 } from '@novu/application-generic';
 
 import * as packageJson from '../../../package.json';
@@ -62,6 +62,7 @@ const DAL_MODELS = [
   OrganizationRepository,
   EnvironmentRepository,
   ExecutionDetailsRepository,
+  FeatureFlagsService,
   NotificationTemplateRepository,
   SubscriberRepository,
   NotificationRepository,
@@ -109,7 +110,6 @@ const PROVIDERS = [
   DigestFilterStepsTimed,
   distributedLockService,
   EventsDistributedLockService,
-  featureFlagsService,
   GetIsInMemoryClusterModeEnabled,
   getIsMultiProviderConfigurationEnabled,
   InvalidateCacheService,

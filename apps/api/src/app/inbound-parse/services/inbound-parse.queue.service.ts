@@ -1,6 +1,6 @@
 import {
-  InboundParseQueueService as InboundParseQueue,
-  InboundParseWorkerService as InboundParseWorker,
+  InboundParseQueue,
+  InboundParseWorker,
   Queue,
   QueueOptions,
   Worker,
@@ -22,6 +22,7 @@ export class InboundParseQueueService {
     public readonly inboundParseQueue: InboundParseQueue,
     public readonly inboundParseWorker: InboundParseWorker
   ) {
+    console.log('here');
     this.inboundParseQueue.createQueue();
     this.inboundParseWorker.createWorker(this.getWorkerProcessor(), this.getWorkerOptions());
   }

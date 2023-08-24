@@ -78,7 +78,7 @@ export const getClientAndConfigForCluster = (
       isClientReady: isMemoryDbClientReady,
       validate: validateMemoryDbClusterProviderConfig,
     },
-    [InMemoryProviderEnum.REDIS]: {
+    [InMemoryProviderEnum.REDIS_CLUSTER]: {
       getClient: getRedisCluster,
       getConfig: getRedisClusterProviderConfig,
       isClientReady: isRedisClusterClientReady,
@@ -88,12 +88,9 @@ export const getClientAndConfigForCluster = (
 
   const provider = clusterProviders[providerId];
 
-  if (
-    !provider ||
-    !provider.validate() ||
-    providerId === InMemoryProviderEnum.REDIS
-  ) {
-    const defaultProvider = clusterProviders[InMemoryProviderEnum.REDIS];
+  if (!provider || !provider.validate()) {
+    const defaultProvider =
+      clusterProviders[InMemoryProviderEnum.REDIS_CLUSTER];
     if (!defaultProvider.validate()) {
       const message = `Provider ${providerId} is not properly configured in the environment variables`;
       Logger.error(message, LOG_CONTEXT);
